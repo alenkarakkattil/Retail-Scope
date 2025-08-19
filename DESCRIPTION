@@ -1,0 +1,26 @@
+Package: RetailScope
+Type: Package
+Title: An Interactive Dashboard for E-Commerce Sales Analysis
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Alen", "K Suresh",
+      email = "alenkarakkattil4444@gmail.com",
+      role = c("aut", "cre")
+    )
+  )
+Description: Provides an interactive Shiny dashboard to explore and analyze
+    the Olist e-commerce dataset. Includes functions for data loading,
+    cleaning, and visualization of key business metrics and trends.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    shiny,
+    shinydashboard,
+    plotly,
+    dplyr,
+    lubridate,
+    readr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

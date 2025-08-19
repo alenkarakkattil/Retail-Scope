@@ -1,0 +1,127 @@
+---
+title: "RetailScope: E-Commerce Sales Analysis"
+author: "Alen K Suresh"
+date: "19/08/2025"
+format: 
+  html:
+    theme: cosmo
+    toc: true
+    toc-float: true
+    code-fold: true
+---
+
+## Introduction
+
+This report presents a high-level analysis of the Brazilian e-commerce dataset from Olist. All data loading and cleaning is performed by the custom `RetailScope` R package, ensuring the analysis is fully reproducible.
+
+```{r}
+#| label: setup
+#| include: false
+
+# This chunk loads our package and prepares the data for the report.
+# It's hidden in the final document to keep things clean.
+
+library(RetailScope) # Our custom package
+library(dplyr)
+library(plotly)
+library(DT)
+library(lubridate)
+
+# Load and clean data using our package's functions
+sales_data <- load_core_data() %>% 
+              clean_sales_data()
+```
+
+## Key Performance Indicators
+
+Here are the core business metrics from all delivered orders in the dataset.
+
+```{r}
+#| label: kpis
+#| echo: false
+
+# Calculate KPIs from the clean data
+total_revenue <- sum(sales_data$payment_value, na.rm = TRUE)
+total_orders <- n_distinct(sales_data$order_id)
+unique_customers <- n_distinct(sales_data$customer_unique_id)
+avg_order_value <- total_revenue / total_orders
+```
+
+::: {.panel-tabset}
+
+#### Total Revenue
+**`r paste0("₹", round(total_revenue / 1000000, 2), "M")`**
+
+#### Total Orders
+**`r format(total_orders, big.mark = ",")`**
+
+#### Unique Customers
+**`r format(unique_customers, big.mark = ",")`**
+
+#### Avg. Order Value
+**`r paste0("₹", round(avg_order_value, 2))`**
+
+:::
+
+## Monthly Sales Trend
+
+The interactive chart below shows the total revenue generated each month. It reveals a clear seasonal pattern and a strong overall growth trend over the two-year period.
+
+```{r}
+#| label: monthly-revenue-plot
+#| echo: false
+#| fig-cap: "Total revenue generated per month."
+
+# Aggregate data by month
+monthly_revenue <- sales_data %>%
+  mutate(month = floor_date(order_purchase_date, "month")) %>%
+  group_by(month) %>%
+  summarise(revenue = sum(payment_value, na.rm = TRUE)) %>%
+  arrange(month)
+
+# Create an interactive plot
+plot_ly(
+  data = monthly_revenue,
+  x = ~month,
+  y = ~revenue,
+  type = 'scatter',
+  mode = 'lines+markers'
+) %>%
+  layout(
+    title = "Monthly Revenue Trend",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Total Revenue (₹)"),
+    hovermode = "x unified"
+  )
+```
+
+## Geographic Sales Distribution
+
+To find the most valuable regions, the following table breaks down revenue and order volume by state. You can sort the columns or use the search box to explore the data.
+
+```{r}
+#| label: state-revenue-table
+#| echo: false
+
+# Calculate revenue by state
+revenue_by_state <- sales_data %>%
+  group_by(customer_state) %>%
+  summarise(
+    total_revenue = sum(payment_value, na.rm = TRUE),
+    number_of_orders = n_distinct(order_id)
+  ) %>%
+  arrange(desc(total_revenue)) %>%
+  mutate(total_revenue_formatted = scales::dollar(total_revenue, prefix = "₹"))
+
+# Display as an interactive datatable
+datatable(
+  revenue_by_state[, c("customer_state", "total_revenue_formatted", "number_of_orders")],
+  colnames = c("State", "Total Revenue", "Number of Orders"),
+  options = list(pageLength = 10),
+  caption = "Total Revenue and Order Count by State"
+)
+```
+
+## Conclusion
+
+This analysis highlights the strong growth and regional performance of the business. By leveraging the `RetailScope` package, this Quarto document serves as a fully reproducible and shareable artifact of our key findings.
