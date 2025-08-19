@@ -32,3 +32,18 @@ devtools::install_github("alenkarakkattil/Retail-Scope")
 library(RetailScope)
 run_app()
 ```
+## Repository Structure
+```
+Retail-Scope/
+├── R/                # Core functions (data processing, dashboard logic)
+├── inst/             # App files (UI, server, etc.)
+├── data/             # Sample e-commerce dataset
+├── man/              # Documentation for functions
+├── DESCRIPTION       # Package metadata
+├── NAMESPACE         # Function exports
+└── README.md       
+```
+
+## Contact
+### Author: Alen K Suresh
+### alenkarakkattil4444@gmail.com
