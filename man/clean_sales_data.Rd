@@ -6,9 +6,12 @@
 \usage{
 clean_sales_data(data)
 }
+\arguments{
+\item{data}{A dataframe containing the raw sales data.}
+}
 \value{
 A cleaned and transformed dataframe.
 }
 \description{
-Takes the raw, combined olist data and performs cleaning.
+Clean and Transform Sales Data
 }

@@ -1,7 +1,7 @@
 ---
-title: "RetailScope: E-Commerce Sales Analysis"
+title: "RetailScope: Indian E-Commerce Sales Analysis"
 author: "Alen K Suresh"
-date: "19/08/2025"
+date: "today"
 format: 
   html:
     theme: cosmo
@@ -12,7 +12,7 @@ format:
 
 ## Introduction
 
-This report presents a high-level analysis of the Brazilian e-commerce dataset from Olist. All data loading and cleaning is performed by the custom `RetailScope` R package, ensuring the analysis is fully reproducible.
+This report presents a high-level analysis of an **Indian e-commerce dataset**. All data loading and cleaning is performed by the custom `RetailScope` R package, ensuring the analysis is fully reproducible and reflects the new data source.
 
 ```{r}
 #| label: setup
@@ -27,14 +27,14 @@ library(plotly)
 library(DT)
 library(lubridate)
 
-# Load and clean data using our package's functions
+# Load and clean data using our package's functions for the Indian dataset
 sales_data <- load_core_data() %>% 
               clean_sales_data()
 ```
 
 ## Key Performance Indicators
 
-Here are the core business metrics from all delivered orders in the dataset.
+Here are the core business metrics from the dataset.
 
 ```{r}
 #| label: kpis
@@ -50,7 +50,7 @@ avg_order_value <- total_revenue / total_orders
 ::: {.panel-tabset}
 
 #### Total Revenue
-**`r paste0("₹", round(total_revenue / 1000000, 2), "M")`**
+**`r paste0("₹", round(total_revenue / 100000, 2), "L")`**
 
 #### Total Orders
 **`r format(total_orders, big.mark = ",")`**
@@ -65,7 +65,7 @@ avg_order_value <- total_revenue / total_orders
 
 ## Monthly Sales Trend
 
-The interactive chart below shows the total revenue generated each month. It reveals a clear seasonal pattern and a strong overall growth trend over the two-year period.
+The interactive chart below shows the total revenue generated each month. It reveals sales patterns over the fiscal year covered in the dataset.
 
 ```{r}
 #| label: monthly-revenue-plot
@@ -124,4 +124,4 @@ datatable(
 
 ## Conclusion
 
-This analysis highlights the strong growth and regional performance of the business. By leveraging the `RetailScope` package, this Quarto document serves as a fully reproducible and shareable artifact of our key findings.
+This analysis highlights key sales trends from the Indian e-commerce dataset. By leveraging the `RetailScope` package, this Quarto document serves as a fully reproducible and shareable artifact of our findings.

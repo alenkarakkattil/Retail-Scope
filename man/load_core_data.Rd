@@ -10,5 +10,5 @@ load_core_data()
 A tibble with the combined data.
 }
 \description{
-Reads and joins the core olist datasets from within the package.
+Reads and joins the Indian e-commerce datasets.
 }

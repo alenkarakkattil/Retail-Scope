@@ -1,26 +1,22 @@
 #' Clean and Transform Sales Data
-#' @description Takes the raw, combined olist data and performs cleaning.
+#' @param data A dataframe containing the raw sales data.
 #' @export
 #' @return A cleaned and transformed dataframe.
 #' @import dplyr
-#' @importFrom lubridate as_date
+#' @importFrom lubridate dmy
 clean_sales_data <- function(data) {
   cleaned_data <- data %>%
+    transmute(
+      order_id = `Order ID`,
+      customer_unique_id = CustomerName,
+      order_purchase_date = dmy(`Order Date`),
+      payment_value = Amount,
+      customer_state = State
+    ) %>%
     filter(
       !is.na(order_id),
-      !is.na(customer_unique_id),
-      order_status == "delivered"
-    ) %>%
-    mutate(
-      order_purchase_date = as_date(order_purchase_timestamp),
-      payment_value = if_else(is.na(payment_value), 0, payment_value)
-    ) %>%
-    select(
-      order_id,
-      customer_unique_id,
-      order_purchase_date,
-      payment_value,
-      customer_state
+      !is.na(order_purchase_date),
+      !is.na(payment_value)
     )
 
   return(cleaned_data)

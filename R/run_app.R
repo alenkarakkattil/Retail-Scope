@@ -4,10 +4,10 @@
 #' @import shiny
 #' @import shinydashboard
 run_app <- function() {
-  # --- UI ---
-  ui <- dashboardPage(
+  # UI
+  ui <- shinydashboard::dashboardPage(
     skin = "purple",
-    dashboardHeader(title = "RetailScope"),
+    dashboardHeader(title = "RetailScope - India"),
     dashboardSidebar(sidebarMenu(menuItem("Overview", tabName = "overview", icon = icon("chart-line")))),
     dashboardBody(
       tabItems(
@@ -15,10 +15,10 @@ run_app <- function() {
                 fluidRow(
                   box(title = "Controls", status = "warning", solidHeader = TRUE, width = 12,
                       sliderInput("date_range", "Select Date Range:",
-                                  min = as.Date("2016-09-01"), max = as.Date("2018-10-31"),
-                                  value = c(as.Date("2017-01-01"), as.Date("2018-01-01")), timeFormat = "%b %Y"),
+                                  min = as.Date("2018-04-01"), max = as.Date("2019-03-31"),
+                                  value = c(as.Date("2018-04-01"), as.Date("2019-03-31")), timeFormat = "%b %Y"),
                       selectInput("state_select", "Select State:",
-                                  choices = c("All", "SP", "RJ", "MG", "RS", "PR", "SC", "BA", "DF", "ES", "GO", "PE", "CE", "PA", "MT", "MA", "PB", "MS", "PI", "RN", "AL", "SE", "TO", "RO", "AM", "AC", "AP", "RR"),
+                                  choices = c("All", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"),
                                   selected = "All", multiple = TRUE))
                 ),
                 fluidRow(
@@ -37,7 +37,7 @@ run_app <- function() {
     )
   )
 
-  # --- Server ---
+  # Server
   server <- function(input, output) {
     sales_data <- reactive({ load_core_data() %>% clean_sales_data() })
 
@@ -82,6 +82,6 @@ run_app <- function() {
     })
   }
 
-  # --- Run App ---
+  # Run App
   shinyApp(ui = ui, server = server)
 }

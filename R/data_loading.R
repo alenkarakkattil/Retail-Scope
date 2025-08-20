@@ -1,24 +1,20 @@
 #' Load and Prepare Core Datasets
-#' @description Reads and joins the core olist datasets from within the package.
+#' @description Reads and joins the Indian e-commerce datasets.
 #' @export
 #' @return A tibble with the combined data.
 #' @import dplyr
 #' @import readr
 load_core_data <- function() {
-  # Find the data folder inside the installed package
   data_path <- system.file("extdata", "data", package = "RetailScope")
 
-  orders_path <- file.path(data_path, "olist_orders_dataset.csv")
-  payments_path <- file.path(data_path, "olist_order_payments_dataset.csv")
-  customers_path <- file.path(data_path, "olist_customers_dataset.csv")
+  orders_path <- file.path(data_path, "List of Orders.csv")
+  details_path <- file.path(data_path, "Order Details.csv")
 
   orders <- readr::read_csv(orders_path, show_col_types = FALSE)
-  payments <- readr::read_csv(payments_path, show_col_types = FALSE)
-  customers <- readr::read_csv(customers_path, show_col_types = FALSE)
+  details <- readr::read_csv(details_path, show_col_types = FALSE)
 
   combined_data <- orders %>%
-    left_join(customers, by = "customer_id") %>%
-    left_join(payments, by = "order_id")
+    left_join(details, by = "Order ID")
 
   return(combined_data)
 }
