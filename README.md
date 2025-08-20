@@ -1,9 +1,9 @@
 # RetailScope: An Interactive E-Commerce Sales Dashboard 
 
 Welcome to **RetailScope**!  
-This project is an **R package** that builds and launches a user-friendly **Shiny dashboard** to explore a large e-commerce dataset.  
+Welcome to RetailScope! This project is an R package that builds and launches a user-friendly Shiny dashboard to explore and analyze a large Indian e-commerce dataset.
 
-I built this as a **portfolio piece** to showcase my skills in creating clean, reusable R code and turning complex data into an interactive and insightful tool.  
+I built this as a portfolio piece to showcase my skills in creating clean, reusable R code and turning complex data into an interactive and insightful tool.
 
 ---
 
